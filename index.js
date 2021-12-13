@@ -3,52 +3,45 @@ function computerPlay() {
   return choise[Math.floor(Math.random() * 3)];
 }
 
-function playerSelection() {
-  let playerSelection = prompt(
-    "please chose Rock, Paper or Scissors"
-  ).toLowerCase();
-  let firstLetter = playerSelection.charAt(0).toUpperCase();
-  playerSelection = firstLetter + playerSelection.slice(1);
-  return playerSelection;
-}
+let buttons = document.querySelectorAll("button");
+buttons.forEach((button) =>
+  button.addEventListener("click", function (e) {
+    let player = e.target.innerText;
+    playRound(player);
+  })
+);
 
-function playRound(player, computer) {
-  player = playerSelection();
-  computer = computerPlay();
-  let outcome = "";
+function playRound(player) {
+  let computer = computerPlay();
+  let playerScore = document.getElementsByClassName("player")[0];
+  let computerScore = document.getElementsByClassName("computer")[0];
+  let resultMesage = document.getElementsByClassName("resultMesage")[0];
   if (player == computer) {
-    outcome = "It's a Tie.";
+    resultMesage.innerText = "It's a Tie.";
+    resultMesage.style.color = "#FCE872";
   } else if (player == "Rock" && computer == "Paper") {
-    outcome = "You lose, Paper beats Rock";
+    resultMesage.innerText = "You lose, Paper beats Rock";
+    resultMesage.style.color = "#e22957";
+    computerScore.innerText++;
   } else if (player == "Rock" && computer == "Scissors") {
-    outcome = "You win, Rock beats Scissors";
+    resultMesage.innerText = "You win, Rock beats Scissors";
+    resultMesage.style.color = "#81d648";
+    playerScore.innerText++;
   } else if (player == "Paper" && computer == "Rock") {
-    outcome = "You win, Paper beats Rock";
+    resultMesage.innerText = "You win, Paper beats Rock";
+    resultMesage.style.color = "#81d648";
+    playerScore.innerText++;
   } else if (player == "Paper" && computer == "Scissors") {
-    outcome = "You lose, Scissors beats Paper";
+    resultMesage.innerText = "You lose, Scissors beats Paper";
+    resultMesage.style.color = "#e22957";
+    computerScore.innerText++;
   } else if (player == "Scissors" && computer == "Paper") {
-    outcome = "You win, Scissors beats Paper";
+    resultMesage.innerText = "You win, Scissors beats Paper";
+    resultMesage.style.color = "#81d648";
+    playerScore.innerText++;
   } else {
-    outcome = "You lose,Rock beats Scissors";
+    resultMesage.innerText = "You lose,Rock beats Scissors";
+    resultMesage.style.color = "#e22957";
+    computerScore.innerText++;
   }
-  return outcome;
 }
-
-function playGame(loops) {
-  let playerScore = 0;
-  let computerScore = 0;
-  for (let index = 0; index < loops; index++) {
-    let round = playRound();
-    console.log(round);
-    if (round.includes("win")) {
-      playerScore += 1;
-    } else if (round.includes("lose")) {
-      computerScore += 1;
-    } else {
-      computerScore += 0;
-    }
-  }
-  console.log([playerScore, computerScore]);
-}
-
-playGame(5);
